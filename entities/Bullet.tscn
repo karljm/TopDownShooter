@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmk1nba1np3s1"]
+
+[ext_resource type="Texture2D" uid="uid://db22tpc5tj6da" path="res://art/kenney_top-down-tanks-redux/Spritesheet/onlyObjects_default.png" id="1_dscta"]
+[ext_resource type="Script" path="res://scripts/Bullet.cs" id="1_oibs0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vj8n"]
+size = Vector2(10, 16)
+
+[node name="Bullet" type="Area2D"]
+rotation = 1.5708
+script = ExtResource("1_oibs0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4vj8n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_dscta")
+region_enabled = true
+region_rect = Rect2(72, 176, 8, 14)
