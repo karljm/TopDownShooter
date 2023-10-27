@@ -32,4 +32,14 @@ public partial class Bullet : Area2D
 	{
 		QueueFree();
 	}
+
+	public void OnBodyEntered(CharacterBody2D body)
+	{
+		// using duck typing
+		if (body.HasMethod("HandleHit"))
+		{
+			body.Call("HandleHit");
+			QueueFree();
+		}
+	}
 }

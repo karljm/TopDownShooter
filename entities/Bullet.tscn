@@ -23,4 +23,5 @@ region_rect = Rect2(72, 176, 8, 14)
 wait_time = 2.0
 autostart = true
 
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="timeout" from="KillTimer" to="." method="OnKillTimerTimeout"]

@@ -17,6 +17,7 @@ public partial class Player : CharacterBody2D
 	private Timer _attackCooldown;
 	private AnimationPlayer _shootAnimation;
 
+	private float _health = 200;
 
     public override void _Ready()
     {
@@ -72,5 +73,11 @@ public partial class Player : CharacterBody2D
 		EmitSignal(SignalName.BulletFired, bullet, _muzzle.GlobalPosition, direction);
 		_attackCooldown.Start();
 		_shootAnimation.Play("MuzzleFlash");
+	}
+
+	public void HandleHit()
+	{
+		_health -= 20;
+		GD.Print("Health = " + _health);
 	}
 }
