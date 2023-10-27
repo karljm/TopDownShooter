@@ -3,27 +3,32 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	[Export]
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
 
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
-	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
 	public override void _PhysicsProcess(double delta)
 	{
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
-		// Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-		// if (direction != Vector2.Zero)
-		// {
-		// 	velocity.X = direction.X * Speed;
-		// }
-		// else
-		// {
-		// 	velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-		// }
+		var movement_direction = Vector2.Zero; // The player's movement vector.
 
-		Velocity = velocity;
+		// Godot 4.0 solution
+		// Vector2 move_input = Input.GetVector("left", "right", "up", "down");
+
+		if (Input.IsActionPressed("move_up"))
+			movement_direction.Y = -1;
+		if (Input.IsActionPressed("move_down"))
+			movement_direction.Y = 1;
+		if (Input.IsActionPressed("move_left"))
+			movement_direction.X = -1;
+		if (Input.IsActionPressed("move_right"))
+			movement_direction.X = 1;
+
+
+
+		if (movement_direction.Length() > 0)
+			movement_direction = movement_direction.Normalized() * Speed;
+		
+		Velocity = movement_direction;
 		MoveAndSlide();
 	}
 }
