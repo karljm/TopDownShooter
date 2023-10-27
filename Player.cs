@@ -30,5 +30,7 @@ public partial class Player : CharacterBody2D
 		
 		Velocity = movement_direction;
 		MoveAndSlide();
+
+		LookAt(GetGlobalMousePosition());
 	}
 }
