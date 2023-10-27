@@ -18,3 +18,9 @@ texture_filter = 1
 texture = ExtResource("1_dscta")
 region_enabled = true
 region_rect = Rect2(72, 176, 8, 14)
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="KillTimer" to="." method="OnKillTimerTimeout"]

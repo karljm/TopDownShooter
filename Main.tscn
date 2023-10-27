@@ -1,7 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://cniru83t2pqe8"]
+[gd_scene load_steps=4 format=3 uid="uid://cniru83t2pqe8"]
 
 [ext_resource type="PackedScene" uid="uid://cx027foawms1p" path="res://entities/Player.tscn" id="1_ptt4n"]
+[ext_resource type="Script" path="res://Main.cs" id="1_s63o7"]
+[ext_resource type="Script" path="res://scripts/BulletManager.cs" id="3_auqfk"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_s63o7")
 
 [node name="Player" parent="." instance=ExtResource("1_ptt4n")]
+
+[node name="BulletManager" type="Node2D" parent="."]
+script = ExtResource("3_auqfk")
+
+[connection signal="BulletFired" from="Player" to="BulletManager" method="OnBulletFired"]

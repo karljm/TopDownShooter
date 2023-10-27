@@ -25,5 +25,11 @@ public partial class Bullet : Area2D
 	public void SetDirection(Vector2 direction)
 	{
 		this.direction = direction;
+		Rotation += direction.Angle();
+	}
+
+	public void OnKillTimerTimeout()
+	{
+		QueueFree();
 	}
 }
