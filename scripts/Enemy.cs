@@ -5,7 +5,12 @@ public partial class Enemy : CharacterBody2D
 {
 	public const float Speed = 300.0f;
 
-	private float _health = 100;
+	private Health _health;
+	// private float _health = 100;
+	public override void _Ready()
+    {
+		_health = GetNode<Health>("Health");
+    }
 	public override void _PhysicsProcess(double delta)
 	{
 
@@ -13,9 +18,9 @@ public partial class Enemy : CharacterBody2D
 	
 	public void HandleHit()
 	{
-		_health -= 20;
+		_health.Value -= 20;
 		// GD.Print("Enemy hit!");
-		if (_health <= 0)
+		if (_health.Value <= 0)
 		{
 			QueueFree();
 		}

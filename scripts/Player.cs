@@ -4,27 +4,20 @@ using System.Runtime.CompilerServices;
 
 public partial class Player : CharacterBody2D
 {
-	[Export] 
-	public PackedScene BulletScene { get; set; }
 	[Export] public const float Speed = 300.0f;
-	public const float JumpVelocity = -400.0f;
 
 	[Signal]
-	public delegate void BulletFiredEventHandler(Bullet bullet);
+	public delegate void PlayerFiredEventHandler(Bullet bullet);
 
-	private Marker2D _muzzle;
-	private Marker2D _gunDirection;
-	private Timer _attackCooldown;
-	private AnimationPlayer _shootAnimation;
+	private Health _health;
+	private Weapon _weapon;
 
-	private float _health = 200;
+	// private float _health = 200;
 
     public override void _Ready()
     {
-		_muzzle = GetNode<Marker2D>("Muzzle");
-		_gunDirection = GetNode<Marker2D>("GunDirection");
-		_attackCooldown = GetNode<Timer>("AttackCooldown");
-		_shootAnimation = GetNode<AnimationPlayer>("ShootAnimation");
+		_health = GetNode<Health>("Health");
+		_weapon = GetNode<Weapon>("Weapon");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -58,26 +51,23 @@ public partial class Player : CharacterBody2D
 	{
 		if (@event.IsActionPressed("click"))
 		{
-			Shoot();
+			// Shoot();
+			_weapon.Shoot();
+			GD.Print("player shot");
 		}
 	}
 
-	private void Shoot()
+	private void Shoot(Bullet bullet, Vector2 position, Vector2 direction)
 	{
-		if (_attackCooldown.IsStopped() == false)
-			return;
-
-		// create new instance of bullet scene
-		Bullet bullet = BulletScene.Instantiate<Bullet>();
-		Vector2 direction = (_gunDirection.GlobalPosition - _muzzle.GlobalPosition).Normalized();
-		EmitSignal(SignalName.BulletFired, bullet, _muzzle.GlobalPosition, direction);
-		_attackCooldown.Start();
-		_shootAnimation.Play("MuzzleFlash");
+		// call down, signal up
+		EmitSignal(SignalName.PlayerFired, bullet, position, direction);
 	}
 
 	public void HandleHit()
 	{
-		_health -= 20;
-		GD.Print("Health = " + _health);
+		// _health -= 20;
+		// _health.UpdateHeal
+		_health.Value -= 20;
+		GD.Print("Health = " + _health.Value);
 	}
 }

@@ -41,5 +41,8 @@ public partial class Bullet : Area2D
 			body.Call("HandleHit");
 			QueueFree();
 		}
+
+		// try to implement interface solution
+		// https://mareks-082.medium.com/duck-typing-in-c-f89e8e1ac37b
 	}
 }
