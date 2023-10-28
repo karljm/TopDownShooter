@@ -6,7 +6,7 @@ public partial class Weapon : Node2D
 	[Export] 
 	public PackedScene BulletScene { get; set; }
 	[Signal]
-	public delegate void WeaponFiredEventHandler(Bullet bullet);
+	public delegate void WeaponFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
 
 	private Marker2D _muzzle;
 	private Marker2D _gunDirection;
@@ -21,16 +21,11 @@ public partial class Weapon : Node2D
 		_shootAnimation = GetNode<AnimationPlayer>("ShootAnimation");
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	public void Shoot()
 	{
 		if (_attackCooldown.IsStopped() == false)
 			return;
-		GD.Print("weapon firing");
+		// GD.Print("weapon firing");
 		// create new instance of bullet scene
 		Bullet bullet = BulletScene.Instantiate<Bullet>();
 		Vector2 direction = (_gunDirection.GlobalPosition - _muzzle.GlobalPosition).Normalized();

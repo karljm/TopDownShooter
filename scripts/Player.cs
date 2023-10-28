@@ -7,7 +7,9 @@ public partial class Player : CharacterBody2D
 	[Export] public const float Speed = 300.0f;
 
 	[Signal]
-	public delegate void PlayerFiredEventHandler(Bullet bullet);
+	public delegate void PlayerFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
+	// [Signal]
+	// public delegate void WeaponFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
 
 	private Health _health;
 	private Weapon _weapon;
@@ -53,11 +55,11 @@ public partial class Player : CharacterBody2D
 		{
 			// Shoot();
 			_weapon.Shoot();
-			GD.Print("player shot");
+			// GD.Print("player shot");
 		}
 	}
 
-	private void Shoot(Bullet bullet, Vector2 position, Vector2 direction)
+	private void OnPlayerWeaponFired(Bullet bullet, Vector2 position, Vector2 direction)
 	{
 		// call down, signal up
 		EmitSignal(SignalName.PlayerFired, bullet, position, direction);

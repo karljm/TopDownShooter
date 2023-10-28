@@ -15,3 +15,5 @@ position = Vector2(224, 32)
 
 [node name="BulletManager" type="Node2D" parent="."]
 script = ExtResource("3_auqfk")
+
+[connection signal="PlayerFired" from="Player" to="BulletManager" method="OnPlayerFired"]

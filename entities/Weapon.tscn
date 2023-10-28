@@ -72,5 +72,3 @@ root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_hnbcx")
 }
-
-[connection signal="WeaponFired" from="." to="." method="OnWeaponFired"]

@@ -27,3 +27,5 @@ region_rect = Rect2(352, 176, 37, 43)
 
 [node name="Weapon" parent="." instance=ExtResource("4_xxxi4")]
 position = Vector2(30, 12)
+
+[connection signal="WeaponFired" from="Weapon" to="." method="OnPlayerWeaponFired"]
