@@ -3,6 +3,8 @@ using System;
 
 public partial class Enemy : CharacterBody2D
 {
+	[Export]
+	private float _speed = 100;
 	[Signal]
 	public delegate void EntityFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
 	public const float Speed = 300.0f;
@@ -40,5 +42,15 @@ public partial class Enemy : CharacterBody2D
 		// call down, signal up
 		EmitSignal(SignalName.EntityFired, bullet, position, direction);
 		// GD.Print("OnPlayerWeaponFired");
+	}
+
+	public void RotateToward(Vector2 location)
+	{
+		Rotation = Mathf.Lerp(Rotation, GlobalPosition.DirectionTo(location).Angle(), 0.1f);
+	}
+
+	public Vector2 VelocityToward(Vector2 location)
+	{
+		return GlobalPosition.DirectionTo(location) * _speed;
 	}
 }

@@ -11,6 +11,7 @@ public partial class Main : Node2D
 
 	public override void _Ready()
 	{
+		GD.Randomize(); // supposidely is automatically called already
 		_bulletManager = GetNode<Node2D>("BulletManager");
 		_player = GetNode<CharacterBody2D>("Player");
 		// _globalSignals = GetNode<GlobalSignals>("GlobalSignals");

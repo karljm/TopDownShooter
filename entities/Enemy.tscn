@@ -10,7 +10,7 @@
 size = Vector2(38, 43)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wsddy"]
-radius = 192.0
+radius = 256.0
 
 [node name="Enemy" type="CharacterBody2D"]
 motion_mode = 1
@@ -37,10 +37,16 @@ script = ExtResource("5_77681")
 metadata/_edit_group_ = true
 
 [node name="PlayerDetectionZone" type="Area2D" parent="EnemyAI" groups=["EnemyGroup"]]
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAI/PlayerDetectionZone"]
 shape = SubResource("CircleShape2D_wsddy")
 
+[node name="RoamTimer" type="Timer" parent="EnemyAI"]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="WeaponFired" from="Weapon" to="." method="OnWeaponFired"]
 [connection signal="body_entered" from="EnemyAI/PlayerDetectionZone" to="EnemyAI" method="OnPlayerDetectionZoneBodyEntered"]
 [connection signal="body_exited" from="EnemyAI/PlayerDetectionZone" to="EnemyAI" method="OnPlayerDetectionZoneBodyExited"]
+[connection signal="timeout" from="EnemyAI/RoamTimer" to="EnemyAI" method="OnRoamTimerTimeout"]
