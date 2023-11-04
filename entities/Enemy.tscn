@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://caeoalottfhii"]
+[gd_scene load_steps=8 format=3 uid="uid://caeoalottfhii"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.cs" id="1_pcesc"]
 [ext_resource type="Texture2D" uid="uid://djlbannbxk0aj" path="res://art/kenney_top-down-shooter/Spritesheet/spritesheet_characters.png" id="3_aoopi"]
 [ext_resource type="PackedScene" uid="uid://2y8rjg5tyodd" path="res://entities/Weapon.tscn" id="4_knb7w"]
 [ext_resource type="PackedScene" uid="uid://cj54u0dpyjeti" path="res://entities/Health.tscn" id="4_vv2vo"]
+[ext_resource type="Script" path="res://scripts/EnemyAI.cs" id="5_77681"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5wanj"]
 size = Vector2(38, 43)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wsddy"]
+radius = 192.0
 
 [node name="Enemy" type="CharacterBody2D"]
 motion_mode = 1
@@ -26,4 +30,17 @@ shape = SubResource("RectangleShape2D_5wanj")
 [node name="Health" parent="." instance=ExtResource("4_vv2vo")]
 
 [node name="Weapon" parent="." instance=ExtResource("4_knb7w")]
-position = Vector2(29, 13)
+position = Vector2(25, 13)
+
+[node name="EnemyAI" type="Node2D" parent="."]
+script = ExtResource("5_77681")
+metadata/_edit_group_ = true
+
+[node name="PlayerDetectionZone" type="Area2D" parent="EnemyAI" groups=["EnemyGroup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAI/PlayerDetectionZone"]
+shape = SubResource("CircleShape2D_wsddy")
+
+[connection signal="WeaponFired" from="Weapon" to="." method="OnWeaponFired"]
+[connection signal="body_entered" from="EnemyAI/PlayerDetectionZone" to="EnemyAI" method="OnPlayerDetectionZoneBodyEntered"]
+[connection signal="body_exited" from="EnemyAI/PlayerDetectionZone" to="EnemyAI" method="OnPlayerDetectionZoneBodyExited"]

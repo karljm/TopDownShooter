@@ -1,19 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://cniru83t2pqe8"]
+[gd_scene load_steps=6 format=3 uid="uid://cniru83t2pqe8"]
 
 [ext_resource type="PackedScene" uid="uid://cx027foawms1p" path="res://entities/Player.tscn" id="1_ptt4n"]
 [ext_resource type="Script" path="res://Main.cs" id="1_s63o7"]
 [ext_resource type="Script" path="res://scripts/BulletManager.cs" id="3_auqfk"]
 [ext_resource type="PackedScene" uid="uid://caeoalottfhii" path="res://entities/Enemy.tscn" id="3_voo4l"]
+[ext_resource type="Script" path="res://globals/GlobalSignals.cs" id="5_5sdr4"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_s63o7")
 
 [node name="Player" parent="." instance=ExtResource("1_ptt4n")]
+position = Vector2(30, 32)
+metadata/_edit_group_ = true
 
 [node name="Enemy" parent="." instance=ExtResource("3_voo4l")]
-position = Vector2(224, 32)
+position = Vector2(288, 160)
 
 [node name="BulletManager" type="Node2D" parent="."]
 script = ExtResource("3_auqfk")
 
-[connection signal="PlayerFired" from="Player" to="BulletManager" method="OnPlayerFired"]
+[node name="GlobalSignals" type="Node2D" parent="."]
+script = ExtResource("5_5sdr4")
+
+[connection signal="EntityFired" from="Player" to="GlobalSignals" method="OnEntityFired"]
+[connection signal="EntityFired" from="Enemy" to="GlobalSignals" method="OnEntityFired"]
+[connection signal="GlobalBulletFired" from="GlobalSignals" to="BulletManager" method="OnBulletFired"]

@@ -7,7 +7,7 @@ public partial class Player : CharacterBody2D
 	[Export] public const float Speed = 300.0f;
 
 	[Signal]
-	public delegate void PlayerFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
+	public delegate void EntityFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
 	// [Signal]
 	// public delegate void WeaponFiredEventHandler(Bullet bullet, Vector2 position, Vector2 direction);
 
@@ -16,13 +16,13 @@ public partial class Player : CharacterBody2D
 
 	// private float _health = 200;
 
-    public override void _Ready()
-    {
+	public override void _Ready()
+	{
 		_health = GetNode<Health>("Health");
 		_weapon = GetNode<Weapon>("Weapon");
-    }
+	}
 
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		var movement_direction = Vector2.Zero; // The player's movement vector.
 
@@ -42,7 +42,7 @@ public partial class Player : CharacterBody2D
 
 		if (movement_direction.Length() > 0)
 			movement_direction = movement_direction.Normalized() * Speed;
-		
+
 		Velocity = movement_direction;
 		MoveAndSlide();
 
@@ -53,22 +53,19 @@ public partial class Player : CharacterBody2D
 	{
 		if (@event.IsActionPressed("click"))
 		{
-			// Shoot();
 			_weapon.Shoot();
-			// GD.Print("player shot");
 		}
 	}
 
-	private void OnPlayerWeaponFired(Bullet bullet, Vector2 position, Vector2 direction)
+	private void OnWeaponFired(Bullet bullet, Vector2 position, Vector2 direction)
 	{
 		// call down, signal up
-		EmitSignal(SignalName.PlayerFired, bullet, position, direction);
+		EmitSignal(SignalName.EntityFired, bullet, position, direction);
+		// GD.Print("OnPlayerWeaponFired");
 	}
 
 	public void HandleHit()
 	{
-		// _health -= 20;
-		// _health.UpdateHeal
 		_health.Value -= 20;
 		GD.Print("Health = " + _health.Value);
 	}
